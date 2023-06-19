@@ -32,14 +32,15 @@ def animal_by_id(id):
 @app.route('/zookeeper/<int:id>')
 def zookeeper_by_id(id):
     query = Zookeeper.query.filter(Zookeeper.id == id).first()
-    animals = [animal.name for animal in query.animals]
+    animals = str()
+    for animal in query.animals:
+        animals+=f'<ul>Animal: {animal.name}</ul>'
     return f'''
     <ul>
     <ul>ID: {query.id}</ul>
     <ul>Name: {query.name}</ul>
     <ul>Birthday: {query.birthday}</ul>
-   
-    <ul>Animals:{"".join(f"{animal}" for animal in animals)}</ul>
+    {animals}
     '''
 
 @app.route('/enclosure/<int:id>')
